@@ -142,7 +142,7 @@ function showPosition(position) {
 
 			navigator.geolocation.getCurrentPosition(function(position){
 				lat=position.coords.latitude;
-				lon=position.coords.latitude;
+				lon=position.coords.longitude;
 				for (var n=0;n<mydata.length;n++){
 					mydata[n]['dist']=calcCrow(mydata[n]['lat'],mydata[n]['lon'],lat,lon).toFixed(1);
 				}
