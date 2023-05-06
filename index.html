@@ -146,7 +146,7 @@ function showPosition(position) {
 				for (var n=0;n<mydata.length;n++){
 					mydata[n]['dist']=calcCrow(mydata[n]['lat'],mydata[n]['lon'],lat,lon).toFixed(1);
 				}
-				//mydata=sortByKey(mydata,"dist").slice(0,10)
+				mydata=sortByKey(mydata,"dist").slice(0,10)
 				//console.log(mydata[0])
 				if(mystations.length > 0){
 					mydata=mydata.filter(item => mystations.includes(item.station_id))
