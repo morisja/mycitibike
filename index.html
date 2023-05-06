@@ -137,19 +137,26 @@ function showPosition(position) {
 		lon=-74.00
 		surl="https://mycitibike.nyc3.cdn.digitaloceanspaces.com/stations.json"
 		surl="https://mycitibike.nyc3.digitaloceanspaces.com/stations.json"
+		//surl="stations.json"
 		$.getJSON(surl, function(mydata) {
 
-			for (var n=0;n<mydata.length;n++){
-				mydata[n]['dist']=calcCrow(mydata[n]['lat'],mydata[n]['lon'],lat,lon).toFixed(1);
-			}
-			//mydata=sortByKey(mydata,"dist").slice(0,10)
-			//console.log(mydata[0])
-			if(mystations.length > 0){
-				mydata=mydata.filter(item => mystations.includes(item.station_id))
-			}
-			$('table').bootstrapTable({
-				data: mydata
-			});
+			navigator.geolocation.getCurrentPosition(function(position){
+				lat=position.coords.latitude;
+				lon=position.coords.latitude;
+				for (var n=0;n<mydata.length;n++){
+					mydata[n]['dist']=calcCrow(mydata[n]['lat'],mydata[n]['lon'],lat,lon).toFixed(1);
+				}
+				//mydata=sortByKey(mydata,"dist").slice(0,10)
+				//console.log(mydata[0])
+				if(mystations.length > 0){
+					mydata=mydata.filter(item => mystations.includes(item.station_id))
+				}
+				$('table').bootstrapTable({
+					data: mydata
+				});
+
+			})
+
 		});
 
 	});
