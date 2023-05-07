@@ -9,25 +9,20 @@
 				shrink-to-fit=no"
     />
     <title>mycitibike</title>
-
-    <!-- Include Bootstrap for styling -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     />
-
-    <!-- Include the Bootstrap Table CSS
-for the table -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css"
     />
   </head>
   <body>
-    <div class="container-fluid p-2 bg-primary text-white text-center">
+	<div class="container-fluid p-1 bg-primary text-white text-center">
       <h1>My Citibike</h1>
     </div>
-    <div class="container mt-5">
+    <div class="container mt-1">
       <table class="table">
         <thead>
           <tr>
@@ -47,109 +42,11 @@ for the table -->
         </thead>
       </table>
     </div>
-
-    <!-- Include jQuery and other required
-files for Bootstrap -->
+    <!-- https://icons8.com/icons/set/favicon-bicycle -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    <!-- Include the JavaScript file
-for Bootstrap table -->
     <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
-    <script type="text/javascript">
-      function getLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-          x.innerHTML = "Geolocation is not supported by this browser.";
-        }
-      }
-
-      function showPosition(position) {
-        console.log(
-          "Latitude: " +
-            position.coords.latitude +
-            "<br>Longitude: " +
-            position.coords.longitude
-        );
-      }
-
-      function getCookie(cookieName) {
-        let cookie = {};
-        document.cookie.split(";").forEach(function (el) {
-          console.log(el);
-          let [key, value] = el.split("=");
-          cookie[key.trim()] = value;
-        });
-        return cookie[cookieName];
-      }
-
-      //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
-      function calcCrow(lat1, lon1, lat2, lon2) {
-        var R = 6371; // km
-        var dLat = toRad(lat2 - lat1);
-        var dLon = toRad(lon2 - lon1);
-        var lat1 = toRad(lat1);
-        var lat2 = toRad(lat2);
-
-        var a =
-          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-          Math.sin(dLon / 2) *
-            Math.sin(dLon / 2) *
-            Math.cos(lat1) *
-            Math.cos(lat2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var d = R * c;
-        return d;
-      }
-
-      // Converts numeric degrees to radians
-      function toRad(Value) {
-        return (Value * Math.PI) / 180;
-      }
-      function sortByKey(array, key) {
-        return array.sort(function (a, b) {
-          var x = a[key];
-          var y = b[key];
-          return x < y ? -1 : x > y ? 1 : 0;
-        });
-      }
-
-      $(document).ready(function () {
-        v = getCookie("mystations");
-        mystations = [];
-        if (undefined != v && "" != v) {
-          mystations = JSON.parse(v);
-        }
-        surl =
-          "https://mycitibike.nyc3.cdn.digitaloceanspaces.com/stations.json";
-        //surl="stations.json"
-        $.getJSON(surl, function (mydata) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            lat = position.coords.latitude;
-            lon = position.coords.longitude;
-            for (var n = 0; n < mydata.length; n++) {
-              mydata[n]["dist"] = calcCrow(
-                mydata[n]["lat"],
-                mydata[n]["lon"],
-                lat,
-                lon
-              ).toFixed(1);
-            }
-            mydata = sortByKey(mydata, "dist").slice(0, 8);
-            //console.log(mydata[0])
-            if (mystations.length > 0) {
-              mydata = mydata.filter((item) =>
-                mystations.includes(item.station_id)
-              );
-            }
-            $("table").bootstrapTable({
-              data: mydata,
-            });
-          });
-        });
-      });
-    </script>
+    <script src="cb.js"></script>
   </body>
 </html>
