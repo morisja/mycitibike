@@ -40,46 +40,69 @@ function setFavourites(stations) {
 function clearFavourites() {
   localStorage.removeItem("mystations");
 }
+function rowStyle(row, index) {
+  var classes = ["bg-blue", "bg-green", "bg-orange", "bg-yellow", "bg-red"];
+
+  if (index % 2 === 0 && index / 2 < classes.length) {
+    return {
+      classes: classes[index / 2],
+    };
+  }
+  return {
+    css: {
+      color: "blue",
+    },
+  };
+}
+
 function getStationUrl() {
   if (location.hostname === "localhost") {
+    console.log("local");
     return "stations.json";
   }
   return "https://mycitibike.nyc3.cdn.digitaloceanspaces.com/stations.json";
 }
 
+function rowStyle(row, index) {
+  console.log(index);
+  var classes = ["bg-blue", "bg-green", "bg-orange", "bg-yellow", "bg-red"];
 
-function sortByDist(rawData, position){
-  lat = position.coords.latitude;
-  lon = position.coords.longitude;
-  for (var n = 0; n < rawData.length; n++) {
-    rawData[n]["dist"] = calcCrow(
-      rawData[n]["lat"],
-      rawData[n]["lon"],
-      lat,
-      lon
-    ).toFixed(1);
+  if (index % 2 === 0 && index / 2 < classes.length) {
+    return {
+      classes: classes[index / 2],
+    };
   }
-  return sortByKey(rawData,"dist");
-}
-
-
-function renderTable(rawData){
-  $("table").bootstrapTable({
-    data: rawData,
-  });
+  return {
+    css: {
+      color: "blue",
+    },
+  };
 }
 
 $(document).ready(function () {
   mystations = getFavourites();
   $.getJSON(getStationUrl(), function (rawData) {
     navigator.geolocation.getCurrentPosition(function (position) {
-      rawData = sortByDist(rawData,position).slice(0,10);
+      lat = position.coords.latitude;
+      lon = position.coords.longitude;
+      for (var n = 0; n < rawData.length; n++) {
+        rawData[n]["dist"] = calcCrow(
+          rawData[n]["lat"],
+          rawData[n]["lon"],
+          lat,
+          lon
+        ).toFixed(1);
+      }
+      rawData = sortByKey(rawData, "dist").slice(0, 10);
       if (mystations.length > 0) {
         rawData = rawData.filter((item) =>
           mystations.includes(item.station_id)
         );
       }
-      renderTable(rawData);
+      $("table").bootstrapTable({
+        data: rawData,
+      });
+      console.log("rendered");
     });
   });
 });
