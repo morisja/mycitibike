@@ -48,29 +48,38 @@ function getStationUrl() {
 }
 
 
+function sortByDist(rawData, position){
+  lat = position.coords.latitude;
+  lon = position.coords.longitude;
+  for (var n = 0; n < rawData.length; n++) {
+    rawData[n]["dist"] = calcCrow(
+      rawData[n]["lat"],
+      rawData[n]["lon"],
+      lat,
+      lon
+    ).toFixed(1);
+  }
+  return sortByKey(rawData,"dist");
+}
+
+
+function renderTable(rawData){
+  $("table").bootstrapTable({
+    data: rawData,
+  });
+}
+
 $(document).ready(function () {
   mystations = getFavourites();
   $.getJSON(getStationUrl(), function (rawData) {
     navigator.geolocation.getCurrentPosition(function (position) {
-      lat = position.coords.latitude;
-      lon = position.coords.longitude;
-      for (var n = 0; n < rawData.length; n++) {
-        rawData[n]["dist"] = calcCrow(
-          rawData[n]["lat"],
-          rawData[n]["lon"],
-          lat,
-          lon
-        ).toFixed(1);
-      }
-      rawData = sortByKey(rawData, "dist").slice(0, 10);
+      rawData = sortByDist(rawData,position).slice(0,10);
       if (mystations.length > 0) {
         rawData = rawData.filter((item) =>
           mystations.includes(item.station_id)
         );
       }
-      $("table").bootstrapTable({
-        data: rawData,
-      });
+      renderTable(rawData);
     });
   });
 });
