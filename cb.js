@@ -180,7 +180,7 @@ $(document).ready(function () {
 
   $.getJSON(getStationUrl(), function (rawData) {
     getLocation(function (position) {
-      rawData = sortByDist(rawData, position).slice(0, 10);
+      rawData = sortByDist(rawData, position);
       renderTable(rawData);
       if (favouriteState) {
         button.removeClass("btn-secondary");
