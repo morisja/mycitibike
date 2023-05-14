@@ -178,7 +178,7 @@ function getLocation(cb) {
   function handleLocation(position) {
     return cb(position);
   }
-  if (location.hostname === "xlocalhost") {
+  if (location.hostname === "localhost") {
     return cb(getDefaultLocation());
   }
   navigator.geolocation.getCurrentPosition(handleLocation, locationError);
