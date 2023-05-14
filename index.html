@@ -19,34 +19,46 @@
     />
   </head>
   <body>
-	<div class="container-fluid p-1 bg-primary text-white text-center">
-      <h1>My Citibike</h1>
-    </div>
-    <div class="container mt-1">
-      <table class="table">
-        <thead>
-          <tr>
-            <th data-field="n">
-              <span class="text-primary"> Name </span>
-            </th>
-            <th data-field="b">
-              <span class="text-primary"> Bikes </span>
-            </th>
-            <th data-field="d">
-              <span class="text-primary"> Docks </span>
-            </th>
-            <th data-field="dist">
-              <span class="text-primary"> Dist </span>
-            </th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-    <!-- https://icons8.com/icons/set/favicon-bicycle -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
     <script src="cb.js"></script>
+    <div class="container-fluid p-1 bg-primary text-white text-center">
+      <h1>My Citibike</h1>
+    </div>
+    <div class="container mt-1">
+      <div class="row">
+        <div class="col-sm text-right">
+          <!--
+          <button type="button" id="toggleFavourites" class="btn btn-sm btn-secondary" onclick="toggleFavourites(this);">Favorites</button>
+          -->
+          <button type="button" id="toggleFavourites" class="btn btn-sm btn-secondary">Favorites</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <table class="table" id="stationView">
+            <thead>
+              <tr>
+                <th data-field="n">
+                  <span class="text-primary"> Name </span>
+                </th>
+                <th data-field="b">
+                  <span class="text-primary"> Bikes </span>
+                </th>
+                <th data-field="d">
+                  <span class="text-primary"> Docks </span>
+                </th>
+                <th data-field="dist">
+                  <span class="text-primary"> Dist </span>
+                </th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- https://icons8.com/icons/set/favicon-bicycle -->
   </body>
 </html>
