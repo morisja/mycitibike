@@ -31,7 +31,7 @@ function getStationUrl() {
   if (location.hostname === "localhost") {
     return "stations.json";
   }
-  return "https://mycitibike.nyc3.cdn.digitaloceanspaces.com/stations.json";
+  return "https://mycitibike.nyc3.digitaloceanspaces.com/stations.json";
 }
 
 function getFavouriteState() {
