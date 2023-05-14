@@ -52,7 +52,6 @@ function removeShowFavourites() {
 }
 function getFavourites() {
   stations = localStorage.getItem("mystations");
-  console.log(stations);
   if (undefined == stations) {
     return [];
   }
@@ -81,7 +80,14 @@ function removeFavourite(station) {
     setFavourites(x);
   }
 }
-
+function getDefaultLocation(){
+  return  {
+    coords: {
+        latitude:40.7350569,
+        longitude: -74.0052955
+    }
+  };
+}
 function sortByDist(rawData, position) {
   lat = position.coords.latitude;
   lon = position.coords.longitude;
@@ -161,16 +167,21 @@ function renderTable(rawData) {
     });
   }
 }
+
 function getLocation(cb) {
-  if (location.hostname === "localhost") {
-    return cb({
-      coords: {
-        latitude: 1,
-        longditude: 1,
-      },
-    });
+  function locationError(err) {
+    var alert=$('#locationAlert');
+    alert.removeClass("d-none");
+    return cb(getDefaultLocation());
   }
-  navigator.geolocation.getCurrentPosition(cb);
+
+  function handleLocation(position) {
+    return cb(position);
+  }
+  if (location.hostname === "xlocalhost") {
+    return cb(getDefaultLocation());
+  }
+  navigator.geolocation.getCurrentPosition(handleLocation, locationError);
 }
 
 $(document).ready(function () {
@@ -195,7 +206,6 @@ $(document).ready(function () {
   $(function () {
     $button.click(function () {
       var checkbox = $(this);
-      console.log(checkbox);
       if (checkbox.hasClass("btn-secondary")) {
         checkbox.removeClass("btn-secondary");
         checkbox.addClass("btn-primary");
