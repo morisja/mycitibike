@@ -92,12 +92,12 @@ function sortByDist(rawData, position) {
   lat = position.coords.latitude;
   lon = position.coords.longitude;
   for (var n = 0; n < rawData.length; n++) {
-    rawData[n]["dist"] = calcCrow(
+    rawData[n]["dist"] = parseFloat(calcCrow(
       rawData[n]["lat"],
       rawData[n]["lon"],
       lat,
       lon
-    ).toFixed(1);
+    ).toFixed(1));
   }
   return sortByKey(rawData, "dist");
 }
