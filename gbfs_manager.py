@@ -48,6 +48,7 @@ class GBFSManager:
                     "n": s["name"],
                     "s": status[s["station_id"]]["station_status"],
                     "b": status[s["station_id"]]["num_bikes_available"],
+                    "e": status[s["station_id"]]["num_bikes_available"],
                     "d": status[s["station_id"]]["num_docks_available"],
                     "lat": s["lat"],
                     "lon": s["lon"],
