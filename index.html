@@ -9,13 +9,22 @@
 				shrink-to-fit=no"
     />
 
-    <meta property="og:image" content="https://mycitibike.nyc3.digitaloceanspaces.com/preview.png" />
+    <meta
+      property="og:image"
+      content="https://mycitibike.nyc3.digitaloceanspaces.com/preview.png"
+    />
 
-    <meta property="og:description" content="Save your favourite stations for quick access to docks and bikes" />
-    
-    <meta property="og:url"content="https://mycitibike.com" />
-    
-    <meta property="og:title" content="My Citibike - Save your favourite stations" />
+    <meta
+      property="og:description"
+      content="Save your favourite stations for quick access to docks and bikes"
+    />
+
+    <meta property="og:url" content="https://mycitibike.com" />
+
+    <meta
+      property="og:title"
+      content="My Citibike - Save your favourite stations"
+    />
 
     <title>mycitibike</title>
     <link
@@ -31,39 +40,52 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <script src="cb.js"></script>
     <div class="container-fluid p-1 bg-primary text-white text-center">
       <h1>My Citibike</h1>
     </div>
-    <div id="locationAlert" class="alert alert-danger d-none text-center" role="alert">
-      App is best when location is shared, defaulting to WXOU Radio Bar, Hudson Street
+    <div
+      id="locationAlert"
+      class="alert alert-danger d-none text-center"
+      role="alert"
+    >
+      App is best when location is shared, defaulting to WXOU Radio Bar, Hudson
+      Street
     </div>
     <div class="container mt-1">
       <div class="row">
-        <div class="col-sm text-right">
-          <button type="button" id="toggleFavourites" class="btn btn-sm btn-secondary font-weight-bold "><i class="fa fa-heart"></i></button>
-        </div>
-      </div>
-      <div class="row">
         <div class="col-sm">
-          <table class="table" id="stationView">
+          <table
+            class="table"
+            id="stationView"
+            data-search="true"
+            data-custom-search="customSearch2"
+            data-search-align="left"
+            data-toolbar="#toolbar"
+            data-buttons="buttons"
+                        >
             <thead>
               <tr>
                 <th data-field="n">
                   <span class="text-primary"> Name </span>
                 </th>
-                <th data-field="b">
-                  <span class="text-primary">  <i class="fa fa-bicycle"></i> </span>
+                <th data-field="b" class="text-center">
+                  <span class="text-primary">
+                    <i class="fa fa-bicycle"></i>
+                  </span>
                 </th>
-                <th data-field="e">
+                <th data-field="e" class="text-center">
                   <span class="text-primary"> <i class="fa fa-bolt"></i> </span>
                 </th>
-                <th data-field="d">
+                <th data-field="d" class="text-center">
                   <span class="text-primary"> <i class="fa fa-stop"></i> </span>
                 </th>
-                <th data-field="dist">
+                <th data-field="dist" class="text-center">
                   <span class="text-primary"> <i class="fa fa-road"></i> </span>
                 </th>
               </tr>

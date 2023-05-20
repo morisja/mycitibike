@@ -80,24 +80,21 @@ function removeFavourite(station) {
     setFavourites(x);
   }
 }
-function getDefaultLocation(){
-  return  {
+function getDefaultLocation() {
+  return {
     coords: {
-        latitude:40.7350569,
-        longitude: -74.0052955
-    }
+      latitude: 40.7350569,
+      longitude: -74.0052955,
+    },
   };
 }
 function sortByDist(rawData, position) {
   lat = position.coords.latitude;
   lon = position.coords.longitude;
   for (var n = 0; n < rawData.length; n++) {
-    rawData[n]["dist"] = parseFloat(calcCrow(
-      rawData[n]["lat"],
-      rawData[n]["lon"],
-      lat,
-      lon
-    ).toFixed(1));
+    rawData[n]["dist"] = parseFloat(
+      calcCrow(rawData[n]["lat"], rawData[n]["lon"], lat, lon).toFixed(1)
+    );
   }
   return sortByKey(rawData, "dist");
 }
@@ -109,15 +106,20 @@ function renderTable1(rawData) {
   });
 }
 
-function operateFormatter1(value, row, index) {
-  return [
-    '<a class="like" href="javascript:void(0)" title="Like">',
-    '<i class="fa fa-heart"></i>',
-    "</a>  ",
-    '<a class="remove" href="javascript:void(0)" title="Remove">',
-    '<i class="fa fa-trash"></i>',
-    "</a>",
-  ].join("");
+function customSearch2(data, text) {
+  favourites=getFavourites();
+  return data.filter(function (row) {
+    if (getFavouriteState() == 0 ){
+      return row.n.toLowerCase().indexOf(text.toLowerCase()) > -1;
+    }
+    else{
+
+      if (favourites.includes(row.i)){
+        return true;
+      }
+      return false;
+    }
+  });
 }
 
 function renderTable(rawData) {
@@ -161,16 +163,16 @@ function renderTable(rawData) {
   var $table = $("#stationView");
   var favouriteState = getFavouriteState();
 
-  if (favouriteState) {
-    $table.bootstrapTable("filterBy", {
-      i: getFavourites(),
-    });
-  }
+   if (favouriteState) {
+     $table.bootstrapTable("filterBy", {
+       i: getFavourites(),
+     });
+   }
 }
 
 function getLocation(cb) {
   function locationError(err) {
-    var alert=$('#locationAlert');
+    var alert = $("#locationAlert");
     alert.removeClass("d-none");
     return cb(getDefaultLocation());
   }
@@ -184,41 +186,56 @@ function getLocation(cb) {
   navigator.geolocation.getCurrentPosition(handleLocation, locationError);
 }
 
+function customSearch(data, text, filter) {
+  return data.filter(function (row) {
+    return row.n.toLowerCase().indexOf(text.toLowerCase()) > -1;
+  });
+}
+
+function buttons() {
+  return {
+    btnFavourite: {
+      text: "Add new row",
+      icon: "fa-heart",
+      id: "toggleFavourites",
+      event: function () {
+        checkbox = $("button[name='btnFavourite']");
+        if (checkbox.hasClass("btn-secondary")) {
+          checkbox.removeClass("btn-secondary");
+          checkbox.addClass("btn-primary");
+          setShowFavourites();
+          $("table").bootstrapTable("filterBy", {
+               i: getFavourites(),
+             });
+        } else {
+          checkbox.removeClass("btn-primary");
+          checkbox.addClass("btn-secondary");
+          removeShowFavourites();
+          $("table").bootstrapTable("filterBy", {});
+        }
+      },
+      attributes: {
+        title: "Favourites",
+      },
+    },
+  };
+}
+
 $(document).ready(function () {
   var mystations = getFavourites();
   var favouriteState = getFavouriteState();
-  var button = $("#toggleFavourites");
 
   $.getJSON(getStationUrl(), function (rawData) {
     getLocation(function (position) {
       rawData = sortByDist(rawData, position);
       renderTable(rawData);
-      if (favouriteState) {
+      if (favouriteState == true) {
+        var button = $("button[name='btnFavourite']");
         button.removeClass("btn-secondary");
         button.addClass("btn-primary");
       }
     });
   });
 
-  //https://examples.bootstrap-table.com/#methods/filter-by.html#view-source
-  var $table = $("#stationView");
-  var $button = $("#toggleFavourites");
-  $(function () {
-    $button.click(function () {
-      var checkbox = $(this);
-      if (checkbox.hasClass("btn-secondary")) {
-        checkbox.removeClass("btn-secondary");
-        checkbox.addClass("btn-primary");
-        setShowFavourites();
-        $table.bootstrapTable("filterBy", {
-          i: getFavourites(),
-        });
-      } else {
-        checkbox.removeClass("btn-primary");
-        checkbox.addClass("btn-secondary");
-        removeShowFavourites();
-        $table.bootstrapTable("filterBy", {});
-      }
-    });
-  });
+
 });
